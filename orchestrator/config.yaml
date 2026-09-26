@@ -1,0 +1,19 @@
+# Configuracao do LiteLLM: orquestrador local (Ollama) + fallback para modelo
+# maior quando a tool `escalar` e chamada. Ver orchestrator/router.py.
+model_list:
+  - model_name: orquestrador-local
+    litellm_params:
+      model: ollama/qwen3:4b
+      api_base: http://ollama:11434
+
+  - model_name: claude-sonnet-5
+    litellm_params:
+      model: anthropic/claude-sonnet-5
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+router_settings:
+  fallbacks:
+    - orquestrador-local: ["claude-sonnet-5"]
+
+litellm_settings:
+  drop_params: true

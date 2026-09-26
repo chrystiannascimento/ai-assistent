@@ -125,6 +125,11 @@ def check_ollama() -> tuple[bool, str]:
     return True, f"OK (modelo '{expected_model}' carregado)"
 
 
+def check_litellm() -> tuple[bool, str]:
+    url = os.environ.get("LITELLM_URL", "http://localhost:4000")
+    return check_http(f"{url}/health")
+
+
 def check_wyoming_wakeword() -> tuple[bool, str]:
     host = os.environ.get("WYOMING_WAKEWORD_HOST", "localhost")
     port = int(os.environ.get("WYOMING_WAKEWORD_PORT", "10400"))
@@ -155,6 +160,7 @@ def build_checks() -> list[Check]:
         Check("Wyoming - openWakeWord", critical=False, run=check_wyoming_wakeword),
         Check("Wyoming - Whisper", critical=False, run=check_wyoming_whisper),
         Check("Wyoming - Piper", critical=False, run=check_wyoming_piper),
+        Check("LiteLLM", critical=False, run=check_litellm),
     ]
 
 
