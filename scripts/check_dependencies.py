@@ -125,6 +125,24 @@ def check_ollama() -> tuple[bool, str]:
     return True, f"OK (modelo '{expected_model}' carregado)"
 
 
+def check_wyoming_wakeword() -> tuple[bool, str]:
+    host = os.environ.get("WYOMING_WAKEWORD_HOST", "localhost")
+    port = int(os.environ.get("WYOMING_WAKEWORD_PORT", "10400"))
+    return check_tcp(host, port)
+
+
+def check_wyoming_whisper() -> tuple[bool, str]:
+    host = os.environ.get("WYOMING_WHISPER_HOST", "localhost")
+    port = int(os.environ.get("WYOMING_WHISPER_PORT", "10300"))
+    return check_tcp(host, port)
+
+
+def check_wyoming_piper() -> tuple[bool, str]:
+    host = os.environ.get("WYOMING_PIPER_HOST", "localhost")
+    port = int(os.environ.get("WYOMING_PIPER_PORT", "10200"))
+    return check_tcp(host, port)
+
+
 def build_checks() -> list[Check]:
     """Registro dos servicos monitorados.
 
@@ -134,6 +152,9 @@ def build_checks() -> list[Check]:
     return [
         Check("Home Assistant", critical=True, run=check_home_assistant),
         Check("Ollama", critical=True, run=check_ollama),
+        Check("Wyoming - openWakeWord", critical=False, run=check_wyoming_wakeword),
+        Check("Wyoming - Whisper", critical=False, run=check_wyoming_whisper),
+        Check("Wyoming - Piper", critical=False, run=check_wyoming_piper),
     ]
 
 
