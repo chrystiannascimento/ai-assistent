@@ -130,6 +130,16 @@ def check_litellm() -> tuple[bool, str]:
     return check_http(f"{url}/health")
 
 
+def check_presidio_analyzer() -> tuple[bool, str]:
+    url = os.environ.get("PRESIDIO_ANALYZER_URL", "http://localhost:5001")
+    return check_http(f"{url}/health")
+
+
+def check_presidio_anonymizer() -> tuple[bool, str]:
+    url = os.environ.get("PRESIDIO_ANONYMIZER_URL", "http://localhost:5002")
+    return check_http(f"{url}/health")
+
+
 def check_wyoming_wakeword() -> tuple[bool, str]:
     host = os.environ.get("WYOMING_WAKEWORD_HOST", "localhost")
     port = int(os.environ.get("WYOMING_WAKEWORD_PORT", "10400"))
@@ -161,6 +171,8 @@ def build_checks() -> list[Check]:
         Check("Wyoming - Whisper", critical=False, run=check_wyoming_whisper),
         Check("Wyoming - Piper", critical=False, run=check_wyoming_piper),
         Check("LiteLLM", critical=False, run=check_litellm),
+        Check("Presidio Analyzer", critical=False, run=check_presidio_analyzer),
+        Check("Presidio Anonymizer", critical=False, run=check_presidio_anonymizer),
     ]
 
 
