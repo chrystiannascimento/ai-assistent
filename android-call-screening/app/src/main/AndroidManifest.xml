@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        A permissao BIND_SCREENING_SERVICE so e concedida pelo sistema ao app
+        selecionado pelo usuario como "app de triagem de chamadas" padrao
+        (via RoleManager.ROLE_CALL_SCREENING). Isso ainda nao esta implementado
+        nesta fase — ver README.
+    -->
+    <application
+        android:label="Assistente de Voz - Triagem de Chamadas"
+        android:allowBackup="false">
+
+        <service
+            android:name=".AssistenteCallScreeningService"
+            android:permission="android.permission.BIND_SCREENING_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.telecom.CallScreeningService" />
+            </intent-filter>
+        </service>
+
+    </application>
+</manifest>
